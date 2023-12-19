@@ -9,6 +9,10 @@ public:
 	Graphics(struct SDL_Renderer*);
 	void putPixel(int x, int y, const Color& c);
 	void putLine(int x1, int y1, int x2, int y2, const Color& c);
+
+	void putRect(int x, int y, int width, int height, const Color& c);
+
+	void putCircle(int x, int y, int r, const Color& c);
 private:
 	struct SDL_Renderer* pen;
 };
