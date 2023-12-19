@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
 #include "Graphics.h"
 #include <unordered_map>
 
@@ -83,11 +84,16 @@ bool Keyboard::checkHeld(SDL_Scancode key) {
 	return state[key];
 }
 
-bool Base_Game::INIT() {
+bool Base_Game::INIT(Uint32 SDLflags, int IMGflags) {
 	static bool s_initialized = false;
 	if (s_initialized) return true;
 
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+	if (SDL_Init(SDLflags) < 0) {
+		std::cout << "[ERROR] SDL init failed." << std::endl;
+		return s_initialized;
+	}
+
+	if (IMG_Init(IMGflags) < 0) {
 		std::cout << "[ERROR] SDL init failed." << std::endl;
 		return s_initialized;
 	}
@@ -96,9 +102,9 @@ bool Base_Game::INIT() {
 	return s_initialized;
 }
 
-Base_Game::Base_Game(const char* name, unsigned int x, unsigned int y, unsigned int width, unsigned int height, Uint32 flags) {
-	if (!INIT()) return;
-	window = SDL_CreateWindow(name, (int)x, (int)y, (int)width, (int)height, flags);
+Base_Game::Base_Game(const char* name, unsigned int x, unsigned int y, unsigned int width, unsigned int height, Uint32 SDLflags, int IMGflags) {
+	if (!INIT(SDLflags, IMGflags)) return;
+	window = SDL_CreateWindow(name, (int)x, (int)y, (int)width, (int)height, SDLflags);
 	if (!window) {
 		std::cout << "[ERROR] Window creation failed." << std::endl;
 		return;
@@ -160,6 +166,8 @@ void Base_Game::loop() {
 
 Base_Game::~Base_Game() {
 	delete gfx;
+	IMG_Quit();
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
+	SDL_Quit();
 }
