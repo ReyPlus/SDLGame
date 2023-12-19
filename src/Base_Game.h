@@ -20,7 +20,7 @@ struct Keyboard {
 class Base_Game {
 public:
 	static bool INIT();
-	Base_Game();
+	Base_Game(const char* name, unsigned int x, unsigned int y, unsigned int width, unsigned int height, Uint32 flags);
 	virtual void loop();
 	virtual ~Base_Game();
 

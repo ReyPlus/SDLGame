@@ -96,9 +96,9 @@ bool Base_Game::INIT() {
 	return s_initialized;
 }
 
-Base_Game::Base_Game() {
+Base_Game::Base_Game(const char* name, unsigned int x, unsigned int y, unsigned int width, unsigned int height, Uint32 flags) {
 	if (!INIT()) return;
-	window = SDL_CreateWindow("Raycasting", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_RESIZABLE);
+	window = SDL_CreateWindow(name, (int)x, (int)y, (int)width, (int)height, flags);
 	if (!window) {
 		std::cout << "[ERROR] Window creation failed." << std::endl;
 		return;
