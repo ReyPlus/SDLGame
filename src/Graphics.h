@@ -1,3 +1,5 @@
+#pragma once
+
 struct Color {
 	Color(int r, int g, int b, int a = 255);
 	int r, g, b, a;
