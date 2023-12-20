@@ -37,7 +37,7 @@ void Music::end() {
 	if (Mix_PlayingMusic()) Mix_HaltMusic();
 }
 
-Music::~Music() {
+void Music::free() {
 	if (music != NULL) {
 		Mix_FreeMusic(music);
 		music = nullptr;

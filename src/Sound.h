@@ -18,8 +18,9 @@ public:
 	static void play();
 	static void pause();
 	static void end();
-	~Music();
+	static void free();
 private:
 	Music() {}
+	~Music() {}
 	static Mix_Music* music;
 };

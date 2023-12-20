@@ -6,6 +6,7 @@
 #include "SDL2/SDL_mixer.h"
 #include "SDL2/SDL_mixer.h"
 #include "Graphics.h"
+#include "Sound.h"
 #include <unordered_map>
 
 void Mouse::getPos(int& x, int& y) {
@@ -184,6 +185,8 @@ void Base_Game::loop() {
 Base_Game::~Base_Game() {
 	delete gfx;
 	IMG_Quit();
+
+	Music::free();
 	Mix_Quit();
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
