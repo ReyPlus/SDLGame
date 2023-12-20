@@ -19,8 +19,8 @@ struct Keyboard {
 
 class Base_Game {
 public:
-	static bool INIT(Uint32 SDLflags, int IMGflags);
-	Base_Game(const char* name, unsigned int x, unsigned int y, unsigned int width, unsigned int height, Uint32 SDLflags, int IMGflags);
+	static bool INIT(Uint32 SDLflags, int IMGflags, int MIXflags);
+	Base_Game(const char* name, unsigned int x, unsigned int y, unsigned int width, unsigned int height, Uint32 windowFlags);
 	virtual void loop();
 	virtual ~Base_Game();
 
@@ -38,4 +38,7 @@ protected:
 	class Graphics* gfx = nullptr;
 	struct SDL_Window* window = nullptr;
 	struct SDL_Renderer* renderer = nullptr;
+
+private:
+	static bool s_initialized;
 };
