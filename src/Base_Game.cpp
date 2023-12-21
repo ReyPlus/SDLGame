@@ -3,7 +3,10 @@
 #include <iostream>
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
+#include "SDL2/SDL_mixer.h"
+#include "SDL2/SDL_mixer.h"
 #include "Graphics.h"
+#include "Sound.h"
 #include <unordered_map>
 
 void Mouse::getPos(int& x, int& y) {
@@ -84,8 +87,10 @@ bool Keyboard::checkHeld(SDL_Scancode key) {
 	return state[key];
 }
 
-bool Base_Game::INIT(Uint32 SDLflags, int IMGflags) {
-	static bool s_initialized = false;
+bool Base_Game::s_initialized = false;
+
+bool Base_Game::INIT(Uint32 SDLflags, int IMGflags, int MIXflags) {
+	s_initialized = false;
 	if (s_initialized) return true;
 
 	if (SDL_Init(SDLflags) < 0) {
@@ -98,13 +103,26 @@ bool Base_Game::INIT(Uint32 SDLflags, int IMGflags) {
 		return s_initialized;
 	}
 
+	if (Mix_Init(MIXflags) && MIXflags != MIXflags) {
+		printf("Mix_Init: Failed to init required ogg and mod support!\n");
+		printf("Mix_Init: %s\n", Mix_GetError());
+		return s_initialized;
+		// handle error
+	}
+
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	{
+		printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+		return s_initialized;
+	}
+
 	s_initialized = true;
 	return s_initialized;
 }
 
-Base_Game::Base_Game(const char* name, unsigned int x, unsigned int y, unsigned int width, unsigned int height, Uint32 SDLflags, int IMGflags) {
-	if (!INIT(SDLflags, IMGflags)) return;
-	window = SDL_CreateWindow(name, (int)x, (int)y, (int)width, (int)height, SDLflags);
+Base_Game::Base_Game(const char* name, unsigned int x, unsigned int y, unsigned int width, unsigned int height, Uint32 windowFlags) {
+	if (!s_initialized) { std::cout << "Base_Game INIT method not properly completed."; return; }
+	window = SDL_CreateWindow(name, (int)x, (int)y, (int)width, (int)height, windowFlags);
 	if (!window) {
 		std::cout << "[ERROR] Window creation failed." << std::endl;
 		return;
@@ -167,6 +185,9 @@ void Base_Game::loop() {
 Base_Game::~Base_Game() {
 	delete gfx;
 	IMG_Quit();
+
+	Music::free();
+	Mix_Quit();
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
