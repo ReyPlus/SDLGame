@@ -1,8 +1,10 @@
 #pragma once
 
+#include "SDL2/SDL.h"
+
 struct Color {
 	Color(int r, int g, int b, int a = 255);
-	int r, g, b, a;
+	SDL_Color c;
 	void update(int r, int g, int b, int a = 255);
 };
 
