@@ -2,13 +2,13 @@
 An SDL2 game library, wrapper of sorts, meant to make the process of creating games and applications easier.
 Will be used as a base library for my future games/applications.
 
-## Features to Implement
+## Features to Implement (Initial)
 - [x] Window Creation
 - [x] Colors
 - [x] Mouse and Keyboard Functionality
 - [x] Images
 - [x] Music and Sound
-- [ ] Fonts/Text
+- [x] Fonts/Text
 - [ ] Buttons
 - [ ] Checkboxes
 - [ ] Toggles
@@ -17,7 +17,13 @@ Will be used as a base library for my future games/applications.
 - [ ] putTriangle
 - [ ] Documentation
 - [ ] windows.md (Compiling Section)
-- [ ] SDL Net?
+
+## Features to Implement (Future)
+- [ ] FontAlphabet
+- [ ] SDL Net
+- [ ] File Handler
+- [ ] Animation
+- [ ] Additional GUI Elements (Dropdowns, Tooltips, Notifications, Textbox, etc)
 
 ## Dependencies
 - sdl2
