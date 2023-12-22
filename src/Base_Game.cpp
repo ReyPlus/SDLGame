@@ -4,7 +4,7 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_mixer.h"
-#include "SDL2/SDL_mixer.h"
+#include "SDL2/SDL_ttf.h"
 #include "Graphics.h"
 #include "Sound.h"
 #include <unordered_map>
@@ -116,6 +116,11 @@ bool Base_Game::INIT(Uint32 SDLflags, int IMGflags, int MIXflags) {
 		return s_initialized;
 	}
 
+	if (TTF_Init() == -1) {
+		printf("SDL_ttf failed to initialize. Error: %s\n", TTF_GetError());
+		return s_initialized;
+	}
+
 	s_initialized = true;
 	return s_initialized;
 }
@@ -188,6 +193,7 @@ Base_Game::~Base_Game() {
 
 	Music::free();
 	Mix_Quit();
+	TTF_Quit();
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
