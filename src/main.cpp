@@ -7,14 +7,15 @@
 #include "Image.h"
 #include "Graphics.h"
 #include "Sound.h"
+#include "Font.h"
 #undef main
 
 class Game : public Base_Game {
 public:
-    Game(const char* name, unsigned int x, unsigned int y, unsigned int width, unsigned int height, Uint32 windowFlags): effect("effect.wav"), img("test.png", 0, 0, 200, 200, renderer, 30, SDL_FLIP_VERTICAL), Base_Game(name, x, y, width, height, windowFlags) {
+    Game(const char* name, unsigned int x, unsigned int y, unsigned int width, unsigned int height, Uint32 windowFlags) : font("robotoReg.ttf", 28, {255,255,255}, renderer), stuff("Hello World", &font, renderer), effect("effect.wav"), img("test.png", 0, 0, 200, 200, renderer, 30, SDL_FLIP_VERTICAL), Base_Game(name, x, y, width, height, windowFlags) {
         Music::load("music.mp3");
+        stuff.moveCentered(400,300);
     }
-
 private:
     void logic() {
         if (kbd.checkPressed(SDL_SCANCODE_R)) effect.play();
@@ -26,11 +27,14 @@ private:
 
     void draw() {
         img.draw();
+        stuff.draw();
     }
 
 private:
     Image img;
     Effect effect;
+    Font font;
+    Text stuff;
 };
 
 int main() {
