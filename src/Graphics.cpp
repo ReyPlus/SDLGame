@@ -32,6 +32,8 @@ void Graphics::putRect(int x, int y, int width, int height, const Color& c) {
 	for (int i = y; i < y + height; i++) putLine(x, i, x + width, i, c);
 }
 
+void Graphics::putRect(SDL_Rect& rect, const Color& c) { putRect(rect.x, rect.y, rect.w, rect.h, c); };
+
 void Graphics::putCircle(int x, int y, int r, const Color& c) {
 	for (int ix = x - r; ix < x + r; ix++) {
 		for (int iy = y - r; iy < y + r; iy++) {
