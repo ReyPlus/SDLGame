@@ -24,23 +24,38 @@ private:
     Color c;
 };
 
+class Switch : public Base_Switch {
+public:
+    Switch(int x, int y, int w, int h, Graphics* gfx) : offC(224, 79, 79), onC(74, 119, 224), Base_Switch(x, y, w, h, gfx) {}
+    void draw() {
+        gfx->putRect(rect, switched? onC : offC);
+    }
+private:
+    Color offC;
+    Color onC;
+};
+
 class Game : public Base_Game {
 public:
-    Game(const char* name, unsigned int x, unsigned int y, unsigned int width, unsigned int height, Uint32 windowFlags) : redButton(0, 0, 100, 50, {255,0,0}, gfx), Base_Game(name, x, y, width, height, windowFlags) {
-        redButton.moveCentered(width/2, height/2);
+    Game(const char* name, unsigned int x, unsigned int y, unsigned int width, unsigned int height, Uint32 windowFlags) : mySwitch(0,0,100,50, gfx), greenButton(0, 0, 100, 50, { 84, 214, 81 }, gfx), Base_Game(name, x, y, width, height, windowFlags) {
+        greenButton.moveCentered(width/2, height/2);
     }
 private:
     void logic() {
-        if (mouse.leftPressed()) redButton.checkClicked(mouse.x, mouse.y);
+        if (mouse.leftPressed()) {
+            greenButton.checkClicked(mouse.x, mouse.y);
+            mySwitch.checkClicked(mouse.x, mouse.y);
+        }
     }
 
     void draw() {
-        redButton.draw();
+        greenButton.draw();
+        mySwitch.draw();
     }
 
 private:
-
-    Button redButton;
+    Switch mySwitch;
+    Button greenButton;
 };
 
 int main() {

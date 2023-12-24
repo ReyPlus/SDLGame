@@ -23,6 +23,16 @@ public:
 	virtual bool checkClicked(int x, int y);
 
 	virtual ~Base_Clickable() {};
-private:
+protected:
 
+};
+
+class Base_Switch : public Base_Clickable {
+public:
+	Base_Switch(Graphics* gfx);
+	Base_Switch(int x, int y, int w, int h, Graphics* gfx);
+	void click();
+	bool getState();
+protected:
+	bool switched = false;
 };
