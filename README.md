@@ -9,12 +9,11 @@ Will be used as a base library for my future games/applications.
 - [x] Images
 - [x] Music and Sound
 - [x] Fonts/Text
-- [ ] Buttons
-- [ ] Checkboxes
-- [ ] Toggles
-- [ ] Progress Bar
-- [ ] Slider
-- [ ] putTriangle
+- [x] Buttons
+- [x] Checkboxes
+- [x] Toggles
+- [x] Progress Bar
+- [x] Slider
 - [ ] Documentation
 - [ ] windows.md (Compiling Section)
 
@@ -24,6 +23,9 @@ Will be used as a base library for my future games/applications.
 - [ ] File Handler
 - [ ] Animation
 - [ ] Additional GUI Elements (Dropdowns, Tooltips, Notifications, Textbox, etc)
+
+## Future Plans
+- Add Rect sturct with hasCollision(int x, int y) method, so don't have to re-write mouse collisions (plus future collision detections) every time.
 
 ## Dependencies
 - sdl2
