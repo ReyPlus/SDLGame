@@ -23,8 +23,6 @@ public:
 	virtual bool checkClicked(int x, int y);
 
 	virtual ~Base_Clickable() {};
-protected:
-
 };
 
 class Base_Switch : public Base_Clickable {
@@ -35,4 +33,25 @@ public:
 	bool getState();
 protected:
 	bool switched = false;
+};
+
+class Base_Bar : public Base_Container {
+public:
+	Base_Bar(int x, int y, int w, int h, Graphics* gfx, double start = 0.0, double min = 0.0, double max = 100.0, double step = 1.0);
+	Base_Bar(Graphics* gfx, double start = 0.0, double min = 0.0, double max = 100.0, double step = 1.0);
+	void takeSteps(int steps);
+protected:
+	double current = 0.0;
+	double min = 0.0;
+	double max = 100.0;
+	double step = 1.0;
+};
+
+class Base_Slider : public Base_Bar {
+public:
+	Base_Slider(int x, int y, int w, int h, Graphics* gfx, double start = 0.0, double min = 0.0, double max = 100.0, double step = 1.0);
+	Base_Slider(Graphics* gfx, double start = 0.0, double min = 0.0, double max = 100.0, double step = 1.0);
+	void setCurrent(int x);
+	virtual bool isDragged(int x, int y) = 0;
+	virtual bool isClicked(int x, int y) = 0;
 };
