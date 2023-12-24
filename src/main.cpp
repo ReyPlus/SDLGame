@@ -6,35 +6,41 @@
 #include "Base_Game.h"
 #include "Image.h"
 #include "Graphics.h"
+#include "Base_GUI.h"
 #include "Sound.h"
 #include "Font.h"
 #undef main
 
+class Button : public Base_Clickable {
+public:
+    Button(int x, int y, int w, int h, Color c, Graphics* gfx) : c(c), Base_Clickable(x, y, w, h, gfx) {}
+    void click() { printf("Button was Clicked\n"); }
+    void moveCentered(int x, int y) {
+        rect.x = int((float)x - (float)rect.w / 2);
+        rect.y = int((float)y - (float)rect.h / 2);
+    }
+    void draw() { gfx->putRect(rect, c); }
+private:
+    Color c;
+};
+
 class Game : public Base_Game {
 public:
-    Game(const char* name, unsigned int x, unsigned int y, unsigned int width, unsigned int height, Uint32 windowFlags) : font("robotoReg.ttf", 28, {255,255,255}, renderer), stuff("Hello World", &font, renderer), effect("effect.wav"), img("test.png", 0, 0, 200, 200, renderer, 30, SDL_FLIP_VERTICAL), Base_Game(name, x, y, width, height, windowFlags) {
-        Music::load("music.mp3");
-        stuff.moveCentered(400,300);
+    Game(const char* name, unsigned int x, unsigned int y, unsigned int width, unsigned int height, Uint32 windowFlags) : redButton(0, 0, 100, 50, {255,0,0}, gfx), Base_Game(name, x, y, width, height, windowFlags) {
+        redButton.moveCentered(width/2, height/2);
     }
 private:
     void logic() {
-        if (kbd.checkPressed(SDL_SCANCODE_R)) effect.play();
-        if (kbd.checkHeld(SDL_SCANCODE_S)) {
-            Music::play();
-        }
-        else Music::pause();
+        if (mouse.leftPressed()) redButton.checkClicked(mouse.x, mouse.y);
     }
 
     void draw() {
-        img.draw();
-        stuff.draw();
+        redButton.draw();
     }
 
 private:
-    Image img;
-    Effect effect;
-    Font font;
-    Text stuff;
+
+    Button redButton;
 };
 
 int main() {
