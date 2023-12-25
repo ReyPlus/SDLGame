@@ -22,6 +22,7 @@ Text::Text(const char* text, Font* in_font, SDL_Renderer* r): font(in_font), r(r
 void Text::setText(const std::string& newStr) {
 	str = newStr;
 	SDL_FreeSurface(surface);
+	SDL_DestroyTexture(texture);
 	surface = TTF_RenderText_Solid(font->getTTF(), str.c_str(), font->getColor().c);
 	texture = SDL_CreateTextureFromSurface(r, surface);
 	TTF_SizeText(font->getTTF(), str.c_str(), &rect.w, &rect.h);
@@ -29,6 +30,8 @@ void Text::setText(const std::string& newStr) {
 
 void Text::modify(std::function<void(std::string&)> func) {
 	func(str);
+	SDL_FreeSurface(surface);
+	SDL_DestroyTexture(texture);
 	surface = TTF_RenderText_Solid(font->getTTF(), str.c_str(), font->getColor().c);
 	texture = SDL_CreateTextureFromSurface(r, surface);
 	TTF_SizeText(font->getTTF(), str.c_str(), &rect.w, &rect.h);

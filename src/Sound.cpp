@@ -17,7 +17,7 @@ Effect::~Effect() {
 }
 
 bool Music::load(const char* path) {
-	if (music != NULL) { Mix_FreeMusic(music); music = nullptr; }
+	free();
 
 	music = Mix_LoadMUS(path);
 	if (music == NULL) { printf("Failed to load Music. SDL_mixer Error: %s\n", Mix_GetError()); return false; }
@@ -43,3 +43,5 @@ void Music::free() {
 		music = nullptr;
 	}
 }
+
+Music::~Music() { free(); }
