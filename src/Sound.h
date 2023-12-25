@@ -17,9 +17,9 @@ public:
 	static bool load(const char* path);
 	static void play();
 	static void pause();
+	static void free();
 	static void end();
 private:
-	static void free();
 	Music() {}
 	~Music();
 	static Mix_Music* music;
