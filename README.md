@@ -14,10 +14,11 @@ Will be used as a base library for my future games/applications.
 - [x] Toggles
 - [x] Progress Bar
 - [x] Slider
-- [ ] Documentation
-- [ ] windows.md (Compiling Section)
+- [x] Documentation
+- [x] windows.md (Compiling Section)
 
 ## Features to Implement (Future)
+- [ ] QOL methods added to most all classes (moveCentered, etc)
 - [ ] FontAlphabet
 - [ ] SDL Net
 - [ ] File Handler
